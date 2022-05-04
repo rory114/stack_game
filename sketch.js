@@ -2,6 +2,9 @@ let score = 0;
 let active_fallers = [];
 let burger_stack = [];
 let skip_frame_counter = 0;
+let current_skip = 0;
+let max_skip = 15;
+let frame_count = 0;
 const faller_width = 100;
 const faller_height = 30;
 const catcher_width = 100;
@@ -120,13 +123,34 @@ function addFaller() {
 
 // runs fallers and displays the stack
 function runFallingStack() {
+
+    // increase difficulty every 300 frames / 10 seconds
+    if( frame_count == 300 ) {
+        frame_count = 0;
+        // increase difficulty
+        current_skip++;
+    } else {
+        frame_count++;
+    }
+    // make sure frame count does not exceed goal
+    if( skip_frame_counter > (max_skip - current_skip) ) {
+        skip_frame_counter = 0
+    }
+
+    // make sure (max_skip - current_skip) doesnt go lower than 2
+    if( current_skip > 13 ) {
+        current_skip = 13;
+    }
+
     // skip every XX frames and then add new faller
-    if( skip_frame_counter == 2 ) {
+    console.log(max_skip - current_skip)
+    if( skip_frame_counter == (max_skip - current_skip) ) {
         addFaller();
         skip_frame_counter = 0
      } else {
         skip_frame_counter++;
      }
+
 
     // display current fallers
     for( const faller of active_fallers ) {
