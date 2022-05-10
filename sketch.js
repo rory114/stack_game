@@ -90,7 +90,7 @@ function draw() {
     image(cloud_backgroud, width/2, height/2, width, height);
 
     // run fallers and catcher
-    runFallingStack();
+//    runFallingStack();
 
     // track game
     runGame();
